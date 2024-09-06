@@ -67,10 +67,10 @@ npm installl --save-dev lite-server
 
 ### javascript 의 타입
 
-- _number_ : 숫자타입
-- _string_ : 문자타입
-- _boolean_ : 불리언타입 - true,false(0)
-- _object_ : 오브젝트 타입 - true,false(0)
+- **number** : 숫자타입
+- **string** : 문자타입
+- **boolean** : 불리언타입 - true,false(0)
+- **object** : 오브젝트 타입 - true,false(0)
 
 ```javascript
 const person: object = {
@@ -111,8 +111,8 @@ const persone: {
 
 이 방법도 있지만 유동적이지 못함.
 
-- _Array_ : 오브젝트 타입 - true,false(0)
-- _Tuple_ : 튜플 타입 - 고정된 배열 타입
+- **Array** : 오브젝트 타입 - true,false(0)
+- **Tuple** : 튜플 타입 - 고정된 배열 타입
 
 ```javascript
 const tupleType:[number,string] = [1,'chohyun']
@@ -120,7 +120,7 @@ const tupleType:[number,string] = [1,'chohyun']
 tupleType = [10,'cho','nam'] => error
 ```
 
-- _Enum_
+- **Enum**
 
 `열거형으로 이름이 있는 상수들의 집합을 정의할 수 있습니다. 열거형을 사용하면 의도를 문서화 하거나 구분되는 사례 집합을 더 쉽게 만들수 있습니다. TypeScript는 숫자와 문자열-기반 열거형을 제공합니다.`
 
@@ -131,8 +131,8 @@ if(Role.ADMIN = 'ADMIN'){
 }
 ```
 
-ADMIN 은 1, READ*ONLY 은 2, AUTHOR 는 3의 값을 가집니다.
-\_enum type 은 Tree-Shaking 이 되지 않는다는 단점을 가지고 있다*
+ADMIN 은 1, READ_ONLY 은 2, AUTHOR 는 3의 값을 가집니다.enum type 은 Tree-Shaking 이 되지 않는다는 단점을 가지고 있다.
+
 ts파일을 컴파일한 소스를 보면
 
 ```javascript
@@ -167,6 +167,69 @@ export const orderStatusKeys = {
 ```
 
 이 코드는 아래와 같이 컴파일된다.
-Typescript 코드에서는 orderStatusKeys의 타입을 정의한 이점을 그대로 누리면서 Javascript로 트랜스파일해도 IIFE가 생성되지 않으므로 Tree-shaking을 할 수가 있다.
 
-- _any_ : 아무거나 타입 - vanila js 랑 다를게 없어 타입스크립트의 이점을 사용할 수 없으니 `주의해서 사용`
+Typescript 코드에서는 orderStatusKeys의 타입을 정의한 이점을 그대로 누리면서
+
+Javascript로 트랜스파일해도 IIFE가 생성되지 않으므로 Tree-shaking을 할 수가 있다.<br/><br/><br/>
+
+- **any** : 아무거나 타입 - vanila js 랑 다를게 없어 타입스크립트의 이점을 사용할 수 없으니 `주의해서 사용`
+
+- **uniun** : 타입을 유연하게 하고 싶을 떄 사용한다.
+
+```typescript
+function combine(input1: number | string, input2: number | string) {
+  let result;
+  if (typeof input1 === "number" && typeof input2 === "number") {
+    result = input1 + input2;
+  } else {
+    result = input1.toString() + input2.toString();
+  }
+  return result;
+}
+
+const combinedAges = combine(30, 26);
+console.log(combinedAges);
+
+const combinedNames = combine("Max", "Anna");
+console.log(combinedNames);
+```
+
+- **리터럴 타입** : TypeScript에 문자열이나 숫자에 정확한 값을 지정하여 더 엄격한 타입을 지정하는 것
+
+  (TypeScript에서 const 변수의 한계점에 대해 업그레이된게 리터럴 타입이라고 보면 됨)
+
+```typescript
+let name_literal: "HYUN" | "NAM";
+
+console.log((name_literal = "HYUN")); // "JiWoo"
+console.log((name_literal = "NAMI")); // error
+
+// 내가 매직을 보여줄게~
+type Name1 = "Hyun" | "Yu";
+type Name2 = "Nam" | "Jin";
+type HelloPerson = `CHO ${Name1 | Name2}`;
+
+let greeting: HelloPerson;
+// type HelloPerson = "CHO Hyun" | "CHO Yu" | "CHO Nam" | "CHO Jin" 쨘~✨
+```
+
+- **void** - void는 TypeScript에서 사용되는 타입 중 하나로, 함수의 반환 타입을 나타냅니다.
+
+  void 타입은 함수가 값을 반환하지 않음을 나타내며, 반환 타입이 없음을 명시적으로 표현하는 용도로 사용됩니다.
+
+```typescript
+function add(n1: number, n2: number) {
+  return n1 + n2;
+}
+
+// function printResult(num: number): void
+function printResult(num: number) {
+  console.log("result : " + num);
+}
+
+console.log(printResult(add(15, 2)));
+// result : 17
+// undefined
+```
+
+##

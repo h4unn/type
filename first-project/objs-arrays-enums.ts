@@ -18,13 +18,17 @@
 // const READ_ONLY = 1;
 // const AUTHOR = 2;
 
-enum Role { ADMIN = 'ADMIN', READ_ONLY = 100, AUTHOR = 'AUTHOR' };
+enum Role {
+  ADMIN = "ADMIN",
+  READ_ONLY = 100,
+  AUTHOR = "AUTHOR",
+}
 
 const person = {
-  name: 'Maximilian',
+  name: "Maximilian",
   age: 30,
-  hobbies: ['Sports', 'Cooking'],
-  role: Role.ADMIN
+  hobbies: ["Sports", "Cooking"],
+  role: Role.ADMIN,
 };
 
 // person.role.push('admin');
@@ -33,7 +37,7 @@ const person = {
 // person.role = [0, 'admin', 'user'];
 
 let favoriteActivities: string[];
-favoriteActivities = ['Sports'];
+favoriteActivities = ["Sports"];
 
 console.log(person.name);
 
@@ -43,5 +47,5 @@ for (const hobby of person.hobbies) {
 }
 
 if (person.role === Role.AUTHOR) {
-  console.log('is author');
+  console.log("is author");
 }
