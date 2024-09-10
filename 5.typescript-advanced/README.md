@@ -1,0 +1,3 @@
+# Typescript Advanced
+
+## Intersection Types
