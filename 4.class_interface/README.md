@@ -72,6 +72,23 @@ accounting.describe();
 
 `동일한 이름의 프로퍼티를 생성해 인수에서 받은 값을 프로퍼티에 저장한다.`
 
+- static : 객체 인스턴스를 생성하지 않아도 사용할 수 있는 접근 제어자
+
+```typescript
+class Example {
+  static a = "hyun nam";
+  constructor(public b: string, public c: string) {}
+
+  test(this: example) {
+    console.log(a, b, c);
+  }
+}
+console.log(example.a);
+
+const examples = new Example("hyun", "nam");
+examples.test();
+```
+
 ## 클래스의 상속(확장)
 
 클래스 상속을 사용하면 클래스를 다른 클래스로 확장할 수 있습니다.
@@ -215,3 +232,78 @@ alert(rabbit.earLength); // 10
 이런 차이 때문에 상속 클래스의 생성자에선 super를 호출해 부모 생성자를 실행해 주어야 합니다. 그렇지 않으면 this가 될 객체가 만들어지지 않아 에러가 발생합니다.
 
 아래 예시와 같이 this를 사용하기 전에 super()를 호출하면 Rabbit의 생성자가 제대로 동작합니다.
+
+---
+
+## interface
+
+컴퓨터 과학에서 인터페이스는 상호 간에 정의한 약속 혹은 규칙을 의미합니다.
+
+타입스크립트에서 인터페이스는 객체 타입을 정의할 때 사용됩니다.
+
+인터페이스는 객체 타입 뿐만 아니라 다음 범주에 대해서도 타입을 정의할 수 있습니다.
+
+### interface 사용
+
+1. 인터페이스는 고정된 값을 할당하지 않는다
+
+```typescript
+interface Person {
+  name: string = "Max"; // => error
+  age: number;
+}
+```
+
+2. 프로퍼티와 마찬가지로 메서드도 구조만 정의할 수 있다.
+
+```typescript
+interface Person {
+  name: string;
+  age: number;
+
+  greet(phrase: string): void;
+}
+```
+
+3. 정의된 속성,타입의 조건만 만족한다면 객체의 속성이 추가되어도 된다.
+
+```typescript
+interface personAge {
+  age: number;
+}
+
+function logAge(obj: personAge) {
+  console.log(obj.age);
+}
+let person = { name: "Capt", age: 28 };
+logAge(person);
+```
+
+### interface optional
+
+인터페이스를 사용할 때 인터페이스에 정의되어 있는 속성을 모두 다 꼭 사용하지 않아도 됩니다. 이를 옵션 속성이라고 합니다.
+
+```typescript
+interface 인터페이스_이름 {
+  속성?: 타입;
+}
+```
+
+### interface leadonly
+
+읽기 전용 속성은 인터페이스로 객체를 처음 생성할 때만 값을 할당하고 그 이후에는 변경할 수 없는 속성을 의미합니다.
+
+```typescript
+interface CraftBeer {
+  readonly brand: string;
+}
+```
+
+인터페이스로 객체를 선언하고 나서 수정하려고 하면 아래와 같이 오류가 납니다.
+
+```typescript
+let myBeer: CraftBeer = {
+  brand: "Belgian Monk",
+};
+myBeer.brand = "Korean Carpenter"; // error!
+```
